@@ -2,9 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nested Menu</title>
+    <style>
+        .nav {
+            background-color: blue;
+            overflow: hidden;
+        }
+        .menu {
+            float: left;
+            overflow: hidden;
+        }
+        .menu .menu-link {
+            border: none;
+            border-right: solid 1px black;
+            color: white;
+            padding: 12px;
+            background-color: inherit;
+            cursor: pointer;
+        }
+        .nav a:hover, .menu:hover .menu-link, .menu-link:focus {
+            background-color: deepskyblue;
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            background-color: deepskyblue;
+            z-index: 999;
+        }
+        .menu-content a {
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            display: block;
+        }
+        .menu-content a:hover {
+            background-color: blue;
+        }
+        .visible {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+<div class="nav">
+    <div class="menu">
+        <button onclick="toggleVisibility(1)" class="menu-link m-1-menus-link">Menu-1 ▼</button>
+        <div class="menu-content" id="mainList1">
+            <a href="#">Sub-menu-1-1</a>
+            <a href="#">Sub-menu-1-2</a>
+            <a href="#">Sub-menu-1-3</a>
+        </div>
+    </div>
+    <div class="menu">
+        <button onclick="toggleVisibility(2)" class="menu-link m-2-menus-link">Menu-2 ▼</button>
+        <div class="menu-content" id="mainList2">
+            <a href="#">Sub-menu-2-1</a>
+            <a href="#">Sub-menu-2-2</a>
+            <a href="#">Sub-menu-2-3</a>
+        </div>
+    </div>
+</div>
 
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+<script>
+    let clickedIndex = 0;
+    function toggleVisibility(i) {
+        clickedIndex = i;
+        document.getElementById("mainList"+i).classList.toggle("visible");
+    }
+
+    window.onclick = function(e) {
+        debugger
+
+            for(let j = 1; j < 3; j ++){
+                if (e.target.matches('.m-'+clickedIndex+'-menus-link')) {
+                    for(let k = 1; k<3; k++){
+                        if(k !== clickedIndex){
+                            if (document.getElementById("mainList"+k).classList.contains('visible')) {
+                                document.getElementById("mainList"+k).classList.remove('visible');
+                            }
+                        }
+                    }
+                }else {
+                    if (document.getElementById("mainList"+j).classList.contains('visible')) {
+                        document.getElementById("mainList"+j).classList.remove('visible');
+                    }
+                }
+            }
+    }
+</script>
 </body>
 </html>
